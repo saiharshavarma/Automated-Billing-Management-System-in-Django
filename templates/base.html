@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +8,11 @@
     <title>Automated Billing Management System</title>
 </head>
 <body>
-    <h1>The website is still under construction</h1>
-    Hey visitor, this is our J-component project for Software Engineering<br><br>
-    This project is made by:<br>
-    <ul>
-        <li>Clifford Christopher</li>
-        <li>Sai Harsha Varma</li>
-        <li>Vaibhav Bakshi</li>
-    </ul>
+    {% include 'navbar.html' %}
+    
+    {% block home %}
+    {% endblock home %}
+
+    {% include 'footer.html' %}
 </body>
 </html>
