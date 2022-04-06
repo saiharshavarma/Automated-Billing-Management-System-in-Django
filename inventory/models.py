@@ -38,10 +38,10 @@ class ItemMain(models.Model):
         print(self.quantity)
         return self.quantity
 
-# class UserCart(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     title = models.ForeignKey(ItemMain, on_delete=models.CASCADE)
-#     total = models.IntegerField()
+class UserCart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    itemid = models.ForeignKey(ItemMain, on_delete=models.CASCADE)
+    total = models.IntegerField()
 
-#     def __str__(self) -> str:
-#         return str(str(self.user) + " -> " + str(self.title))
+    def __str__(self) -> str:
+        return str(str(self.user) + " -> " + str(self.itemid))

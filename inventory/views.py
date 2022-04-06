@@ -1,8 +1,7 @@
 from typing import AnyStr
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-# from .models import ItemMain, ItemsCat,  UserCart
-from .models import ItemMain, ItemsCat
+from .models import ItemMain, ItemsCat, UserCart
 import json
 from django.contrib.auth.decorators import login_required
 
@@ -73,36 +72,33 @@ def item_upload(request):
             )
             itemmain.save()        
         else:
-            print("Test")
             itemsearch[0].update_quantity(quantity)
-            print(itemsearch[0])
             itemsearch[0].save()
 
     return render(request, 'inventory/inventoryadd.html', context)
 
 # @login_required(login_url='login')
-# def cart(request):
-#     context = {}
-#     if request.method == "GET":
-#         user = request.user
-#         items = UserCart.objects.filter(
-#             user = User.objects.filter(username = user)[0]
-#             )
-#         l = []
-#         for i in items:
-#             ll = []
-#             item =ItemMain.objects.filter(title = i.title)[0]
-#             ll.append(ItemsImages.objects.filter(title=item)[0].image)
-#             ll.append(i.title)
-#             ll.append(item.description)
-#             price = item.price
-#             offer = item.offers
-#             newPrice = price - (price * offer)//100
-#             ll.append(newPrice)
-#             ll.append(i.total)
-#             l.append(ll)
-#         context['items'] = l  
-#     return render(request, 'cart.html', context)
+def cart(request):
+    context = {}
+    if request.method == "GET":
+        user = request.user
+        items = UserCart.objects.filter(
+            user = User.objects.filter(username = user)[0]
+            )
+        l = []
+        for i in items:
+            ll = []
+            item =ItemMain.objects.filter(itemid = i.itemid)[0]
+            ll.append(i.title)
+            ll.append(item.description)
+            price = item.price
+            discount = item.discount
+            newPrice = price - (price * discount)//100
+            ll.append(newPrice)
+            ll.append(i.total)
+            l.append(ll)
+        context['items'] = l  
+    return render(request, 'inventory/cart.html', context)
 
 # @login_required(login_url='login')
 # def clear_cart(request):
