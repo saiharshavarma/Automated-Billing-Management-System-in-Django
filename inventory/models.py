@@ -45,7 +45,7 @@ class ItemMain(models.Model):
 class UserCart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     itemid = models.ForeignKey(ItemMain, on_delete=models.CASCADE)
-    total = models.IntegerField()
+    quantity = models.IntegerField(default=0)
 
     def __str__(self) -> str:
         return str(str(self.user) + " -> " + str(self.itemid))

@@ -16,7 +16,7 @@ def home(request):
 
 def items_display(request):
     itemsearch = []
-    l = list(ItemMain.objects.all())
+    l = []
     if request.method == 'POST':
         search_keyword = request.POST.get('search_keyword')
         if search_keyword != "" and search_keyword != None:
@@ -32,14 +32,49 @@ def items_display(request):
         else:
             itemsearch = list(ItemMain.objects.all())
         cat = request.POST.getlist('cat', [])
-        print(cat)
         min_price = request.POST.get('min_price')
         max_price = request.POST.get('max_price')
-        if min_price == '':
+
+        quantity = request.POST.get('quantity')
+        if quantity == '' or quantity == None:
+            quantity = 0
+        else:
+            quantity = int(quantity)
+        id = request.POST.get('id')
+        if id:
+            currentItem = ItemMain.objects.filter(slug=id)[0]
+            if (currentItem.quantity - quantity >= 0):
+                for counter in range(quantity):
+                    cartModel = UserCart.objects.filter(
+                        user=User.objects.filter(username=request.user)[0],
+                        itemid=ItemMain.objects.filter(itemid=id)[0],
+                        quantity=quantity
+                    )
+                    if cartModel:
+                        cartModel = UserCart.objects.create(
+                            user=User.objects.filter(username=request.user)[0],
+                            itemid=ItemMain.objects.filter(itemid=id)[0],
+                            quantity=quantity
+                        )
+                        cartModel.save()
+                    else:
+                        cartModel = UserCart.objects.create(
+                            user=User.objects.filter(username=request.user)[0],
+                            itemid=ItemMain.objects.filter(itemid=id)[0],
+                            quantity=quantity
+                        )
+                        cartModel.save()
+                currentItem.quantity -= quantity
+                currentItem.save()
+            else:
+                #messages.warning("Out of Stock")
+                print("Out of Stock")
+
+        if min_price == '' or min_price == None:
             min_price = 0
         else:
             min_price = int(min_price)
-        if max_price == '':
+        if max_price == '' or max_price == None:
             max_price = 10000000
         else:
             max_price = int(max_price)
@@ -50,10 +85,7 @@ def items_display(request):
                     type__in=ItemsCat.objects.filter(catName__in=cat))
         else:
             items = ItemMain.objects.all()
-        print(list(items))
-        print(itemsearch)
         items = list(set(items).intersection(set(itemsearch)))
-        l = []
         for i in items:
             ll = []
             ll.append(i.itemid)
@@ -71,7 +103,25 @@ def items_display(request):
                 ll.append("Invalid")
             ll.append(i.slug)
             l.append(ll)
-        print(l)
+    else:
+        items = list(ItemMain.objects.all())
+        for i in items:
+            ll = []
+            ll.append(i.itemid)
+            ll.append(i.itemname)
+            ll.append(i.expirydate)
+            ll.append(i.discount)
+            ll.append(i.price)
+            price = i.price
+            offer = i.discount
+            newPrice = price - (price * offer)/100
+            ll.append(newPrice)
+            if newPrice >= 0 and newPrice <= 10000000:
+                ll.append("Valid")
+            else:
+                ll.append("Invalid")
+            ll.append(i.slug)
+            l.append(ll)
     context = {
         "items": l
     }
@@ -116,6 +166,9 @@ def item_upload(request):
 
 def cart(request):
     context = {}
+    unique_items1 = []
+    unique_items2 = []
+    total_amount = 0
     if request.method == "GET":
         user = request.user
         items = UserCart.objects.filter(
@@ -124,43 +177,42 @@ def cart(request):
         l = []
         for i in items:
             ll = []
-            item = ItemMain.objects.filter(itemid=i.itemid)[0]
-            ll.append(i.title)
-            ll.append(item.composition)
+            item = ItemMain.objects.filter(slug=i.itemid)[0]
+            print(item)
+            if item.itemid in unique_items1:
+                pass
+            else:
+                ll.append(item.itemname)
+                unique_items1.append(item.itemid)
             price = item.price
             discount = item.discount
-            newPrice = price - (price * discount)//100
-            ll.append(newPrice)
-            ll.append(i.total)
-            ll.append(newPrice*i.quantity)
+            newPrice = price - (price * discount)/100
+            if item.itemid in unique_items2:
+                pass
+            else:
+                ll.append(newPrice)
+                ll.append(i.quantity)
+                unique_items2.append(item.itemid)
             l.append(ll)
+            total_amount += newPrice
         context['items'] = l
+        context['total'] = total_amount
     return render(request, 'inventory/cart.html', context)
 
-# @login_required(login_url='login')
-# def clear_cart(request):
-#     context = {}
-#     if request.method == "GET":
-#         user = request.user
-#         items = UserCart.objects.filter(
-#             user = User.objects.filter(username = user)[0]
-#             )
-#         l = []
-#         for i in items:
-#             ll = []
-#             item =ItemMain.objects.filter(title = i.title)[0]
-#             ll.append(ItemsImages.objects.filter(title=item)[0].image)
-#             ll.append(i.title)
-#             ll.append(item.description)
-#             price = item.price
-#             offer = item.offers
-#             newPrice = price - (price * offer)//100
-#             ll.append(newPrice)
-#             ll.append(i.total)
-#             l.append(ll)
-#             i.delete()
-#         context['items'] = l
-#         return redirect('cart')
+
+@login_required(login_url='login')
+def clear_cart(request):
+    context = {}
+    if request.method == "GET":
+        user = request.user
+        items = UserCart.objects.filter(
+            user=User.objects.filter(username=user)[0]
+        )
+        l = []
+        for i in items:
+            i.delete()
+        context['items'] = l
+        return redirect('cart')
 
 
 def contact(request):

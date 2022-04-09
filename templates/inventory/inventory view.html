@@ -117,13 +117,17 @@
 					<tr>
 						<td>{{ item.0 }}</td>
 						<td>{{ item.1 }}</td>
-						<td><input type="number" id="quantity" name="quantity" min="0" max="1000000"></td>
-						<td>{{ item.2 }}</td>
-						<td>{{ item.3 }}%</td>
-						<td style="width: 20%;padding-bottom: 10px;"><br><del>Rs. {{ item.4 }}</del><br>
-							Rs. {{ item.5 }}<br><button class="btn">Add
-								to
-								Cart</button></td>
+						<form method="POST">
+							{% csrf_token %}
+							<td><input type="number" id="quantity" name="quantity" min="0" max="1000000"></td>
+							<td>{{ item.2 }}</td>
+							<td>{{ item.3 }}%</td>
+							<td style="width: 20%;padding-bottom: 10px;"><br><del>Rs. {{ item.4 }}</del><br>
+								Rs. {{ item.5 }}<br>
+								<button class="btn">Add to Cart</button>
+							</td>
+							<input type="text" value="{{ item.7 }}" name="id" style="display: none;">
+						</form>
 					</tr>
 					{% endif %}
 					{% endfor %}
