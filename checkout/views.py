@@ -32,25 +32,16 @@
         
 #     if request.method == 'POST':
 #         if request.user.is_authenticated:
-#             Bfirst_name = request.POST['Bfirst_name']
-#             Blast_name = request.POST['Blast_name']
-#             Bcheckout_states = Bstates.objects.get(states = request.POST['Bstates'])
-#             Bstreet = request.POST['Bstreet']
-#             Bapartment = request.POST['Bapartment']
-#             Bcity = request.POST['Bcity']
-#             Bzip = request.POST['Bzip']
-#             Bphone = request.POST['Bphone']
-#             Bemail = request.POST['Bemail']    
-#             cardno = request.POST['cardno']
-#             namecard = request.POST['namecard']
-#             validity = request.POST['validity']
-#             cvv = request.POST['cvv']
-#             billing = Billing.objects.create(Bfirst_name=Bfirst_name, Blast_name=Blast_name, Bcheckout_states=Bcheckout_states, Bstreet=Bstreet, Bapartment=Bapartment, Bcity=Bcity, Bzip=float(Bzip), Bphone=float(Bphone), Bemail=Bemail)
-#             shipping = Shipping.objects.create(Sfirst_name=Bfirst_name, Slast_name=Blast_name, Scheckout_states=Bcheckout_states, Sstreet=Bstreet, Sapartment=Bapartment, Scity=Bcity, Szip=Bzip, Sphone=Bphone, Semail=Bemail)
-#             payment = Payment.objects.create(cardno=cardno, namecard=namecard, validity=validity, cvv=cvv)
-#             billing.save()
-#             payment.save()
-#             shipping.save()        
+#             first_name = request.POST['first_name']
+#             middle_name = request.POST['middle_name']
+#             last_name = request.POST['last_name']
+#             states = request.POST['states']
+#             street = request.POST['street']
+#             city = request.POST['city']
+#             phone = request.POST['phone']
+#             email = request.POST['email']    
+#             billing = Billing.objects.create(first_name=first_name, middle_name=middle_name, last_name=last_name, states=states, street=street, city=city, phone=float(phone), email=email)
+#             billing.save()      
 #             return render(request, 'success.html')
 #         else:
 #             return redirect('login')
