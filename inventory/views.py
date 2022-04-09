@@ -1,7 +1,7 @@
 from typing import AnyStr
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-from .models import ItemMain, ItemsCat, UserCart
+from .models import ItemMain, ItemsCat, UserCart, Contact
 import json
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -161,3 +161,14 @@ def cart(request):
 #             i.delete()
 #         context['items'] = l
 #         return redirect('cart')
+
+
+def contact(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        phone = request.POST.get("phone")
+        problem = request.POST.get("problem")
+        contact = Contact.objects.create(
+            username=username, phone=phone, problem=problem)
+        contact.save()
+    return render(request, "contactus.html", {})
