@@ -67,7 +67,7 @@ def items_display(request):
                 currentItem.quantity -= quantity
                 currentItem.save()
             else:
-                #messages.warning("Out of Stock")
+                # messages.warning("Out of Stock")
                 print("Out of Stock")
 
         if min_price == '' or min_price == None:
@@ -166,41 +166,34 @@ def item_upload(request):
 
 def cart(request):
     context = {}
-    unique_items1 = []
-    unique_items2 = []
     total_amount = 0
     if request.method == "GET":
         user = request.user
         items = UserCart.objects.filter(
             user=User.objects.filter(username=user)[0]
         )
-        l = []
+        l = {}
         for i in items:
             ll = []
             item = ItemMain.objects.filter(slug=i.itemid)[0]
-            print(item)
-            if item.itemid in unique_items1:
-                pass
-            else:
-                ll.append(item.itemname)
-                unique_items1.append(item.itemid)
+            ll.append(item.itemid)
+            ll.append(item.itemname)
             price = item.price
             discount = item.discount
             newPrice = price - (price * discount)/100
-            if item.itemid in unique_items2:
-                pass
+            ll.append(newPrice)
+            if tuple(ll) in l.keys():
+                l[tuple(ll)] += 1
             else:
-                ll.append(newPrice)
-                ll.append(i.quantity)
-                unique_items2.append(item.itemid)
-            l.append(ll)
+                l[tuple(ll)] = 1
             total_amount += newPrice
+        print(l)
         context['items'] = l
         context['total'] = total_amount
     return render(request, 'inventory/cart.html', context)
 
 
-@login_required(login_url='login')
+@ login_required(login_url='login')
 def clear_cart(request):
     context = {}
     if request.method == "GET":

@@ -34,34 +34,26 @@ def generate_bill(request):
     context = {}
     customer = list(CustomerDetails.objects.all())[-1]
     context['customer'] = customer
-    unique_items1 = []
-    unique_items2 = []
     total_amount = 0
     if request.method == "GET":
         user = request.user
         items = UserCart.objects.filter(
             user=User.objects.filter(username=user)[0]
         )
-        l = []
+        l = {}
         for i in items:
             ll = []
             item = ItemMain.objects.filter(slug=i.itemid)[0]
-            print(item)
-            if item.itemid in unique_items1:
-                pass
-            else:
-                ll.append(item.itemname)
-                unique_items1.append(item.itemid)
+            ll.append(item.itemid)
+            ll.append(item.itemname)
             price = item.price
             discount = item.discount
             newPrice = price - (price * discount)/100
-            if item.itemid in unique_items2:
-                pass
+            ll.append(newPrice)
+            if tuple(ll) in l.keys():
+                l[tuple(ll)] += 1
             else:
-                ll.append(newPrice)
-                ll.append(i.quantity)
-                unique_items2.append(item.itemid)
-                l.append(ll)
+                l[tuple(ll)] = 1
             total_amount += newPrice
         print(l)
         context['items'] = l
