@@ -1,8 +1,10 @@
+from statistics import quantiles
 from typing import AnyStr
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-from .models import CustomerDetails
+from .models import CustomerDetails, Medicine_Logs
 from inventory.models import UserCart, ItemMain
+from inventory.views import clear_cart
 import json
 from django.contrib.auth.decorators import login_required
 
@@ -55,6 +57,12 @@ def generate_bill(request):
             else:
                 l[tuple(ll)] = 1
             total_amount += newPrice
+        for item, quantity in l.items():
+            itemtemp = ItemMain.objects.filter(slug=item[0])[0]
+            log = Medicine_Logs.objects.create(
+                user=user, customer=customer, itemid=itemtemp, quantity=quantity, price=item[2]*quantity)
+            log.save()
+        clear_cart(request)
         print(l)
         context['items'] = l
         context['total'] = total_amount
