@@ -80,19 +80,11 @@
 }
 
 .inventoryadd .bigcard {
-	width: 80%;
+	width: 100%;
 	padding: 0 10px 10px 10px;
 
 	display: inline-block;
 	border-radius: 10px;
-}
-
-.inventoryadd .bigcard1 {
-	float: left;
-}
-
-.inventoryadd .bigcard2 {
-	float: right;
 }
 
 .inventoryadd .bigcard1 input[type="text"],
@@ -106,12 +98,8 @@
 	color: black;
 	height: 25px;
 	background: White;
-	font-size: 18px;
+	width: 100%;
 	text-align: left;
-}
-
-.inventoryadd .bigcard2 p {
-	padding: 10px 0 10px 0;
 }
 
 .inventoryadd .bigcard2 input[type="text"] {
@@ -131,6 +119,7 @@
 .inventoryadd .bigcard2 input[type="submit"] {
 	height: 35px;
 	width: 220px;
+	width: 100%;
 	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
 	background-color: #0ca1a6;
@@ -145,23 +134,33 @@
 	border: 1px solid #4CAF50;
 	color: white;
 }
+
 .card {
 
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	transition: 0.3s;
-	width: 28%;
-  }
-  
- 
-  .card:hover {
-	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  }
-  .card {
-	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+
+.card:hover {
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	transition: 0.3s;
-	border-radius: 5px; /* 5px rounded corners */
-	
-  }
-  .active.inventoryadd{
-	  flex: right;
-  }
+	border-radius: 5px;
+	/* 5px rounded corners */
+
+}
+
+.inventoryadd {
+	width: 500px;
+	margin: 0 35%;
+}
+
+.inventoryadd h3 {
+	font-size: 0.8em;
+	line-height: normal;
+	margin-bottom: 10px;
+}

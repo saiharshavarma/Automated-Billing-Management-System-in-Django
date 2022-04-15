@@ -14,13 +14,13 @@
 <div class="container">
 	<div class="row">
 		<aside class="col-md-3">
+			<p></p>
 			<div class="card">
+
 				<article class="filter-group">
+
 					<header class="card-header">
-						<a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
-							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Product type</h6>
-						</a>
+						<h6 class="title">Product type</h6>
 					</header>
 					<div class="filter-content collapse show" id="collapse_1">
 						<div class="card-body">
@@ -29,7 +29,7 @@
 									<form method="POST">
 										{% csrf_token %}
 										<input type="search" placeholder="Search.." name="search_keyword"
-											style="margin-top: 10px; border-radius: 10px;padding-right:20px;padding-bottom: 2px;text-align: left;padding-top: 4px;">
+											style="border-radius: 10px; width: 100%;">
 								</div>
 							</div>
 						</div>
@@ -37,10 +37,7 @@
 				</article>
 				<article class="filter-group">
 					<header class="card-header">
-						<a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true" class="">
-							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Type </h6>
-						</a>
+						<h6 class="title">Type </h6>
 					</header>
 					<div class="filter-content collapse show" id="collapse_2">
 						<div class="card-body">
@@ -74,21 +71,18 @@
 				</article>
 				<article class="filter-group">
 					<header class="card-header">
-						<a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
-							<i class="icon-control fa fa-chevron-down"></i>
-							<h6 class="title">Price range </h6>
-						</a>
+						<h6 class="title">Price range </h6>
 					</header>
 					<div class="filter-content collapse show" id="collapse_3">
 						<div class="card-body">
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label>Min</label>
-									<input class="form-control" placeholder="$0" type="number" name="min_price">
+									<input class="form-control" placeholder="₹0" type="number" name="min_price">
 								</div>
 								<div class="form-group text-right col-md-6">
 									<label>Max</label>
-									<input class="form-control" placeholder="$1,0000" type="number" name="max_price">
+									<input class="form-control" placeholder="₹1,0000" type="number" name="max_price">
 								</div>
 							</div>
 							<button class="btn btn-block btn-primary">Search</button>
@@ -103,28 +97,31 @@
 			<header class="border-bottom mb-4 pb-3">
 			</header>
 			<div>
-				<table style="width:90%;margin-left: 70px;margin-top: 10px;">
-					<tr>
-						<td>Item No.</td>
-						<td>Product Name</td>
-						<td>Quantity</td>
-						<td>Expiry</td>
-						<td>Discount</td>
-						<td>Price</td>
-					</tr>
+				<table class="table table-hover" style="width:90%; margin-left: 70px; margin-top: 10px;">
+					<thead>
+						<tr>
+							<th scope="col" style="	font-weight: bold;">Item ID</td>
+							<th scope="col" style="	font-weight: bold;">Product Name</td>
+							<th scope="col" style="	font-weight: bold;">Quantity</td>
+							<th scope="col" style="	font-weight: bold;">Expiry Date</td>
+							<th scope="col" style="	font-weight: bold;">Discount</td>
+							<th scope="col" style="	font-weight: bold;">Price</td>
+						</tr>
+					</thead>
 					{% for item in items %}
 					{% if item.6 == "Valid" %}
 					<tr>
-						<td>{{ item.0 }}</td>
+						<td scope="row">{{ item.0 }}</td>
 						<td>{{ item.1 }}</td>
 						<form method="POST">
 							{% csrf_token %}
-							<td><input type="number" id="quantity" name="quantity" min="0" max="1000000"></td>
+							<td><input type="number" id="quantity" name="quantity" min="0" max="1000000"
+									style="width: 50%;"></td>
 							<td>{{ item.2 }}</td>
 							<td>{{ item.3 }}%</td>
-							<td style="width: 20%;padding-bottom: 10px;"><br><del>Rs. {{ item.4 }}</del><br>
+							<td style="width: 20%;padding-bottom: 10px;"><del>Rs. {{ item.4 }}</del><br>
 								Rs. {{ item.5 }}<br>
-								<button class="btn">Add to Cart</button>
+								<button class="btn btn-primary">Add to Cart</button>
 							</td>
 							<input type="text" value="{{ item.7 }}" name="id" style="display: none;">
 						</form>
