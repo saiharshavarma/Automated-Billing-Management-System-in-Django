@@ -24,7 +24,7 @@ class ItemMain(models.Model):
     composition = models.TextField()
     manufacturingdate = models.DateField()
     expirydate = models.DateField()
-    quantity = models.DecimalField(decimal_places=2, max_digits=25, default=0)
+    quantity = models.IntegerField(default=0)
     slug = models.SlugField(max_length=50, unique=True,
                             default="", editable=False)
 

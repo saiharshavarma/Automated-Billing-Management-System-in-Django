@@ -176,6 +176,7 @@ def cart(request):
         for i in items:
             ll = []
             item = ItemMain.objects.filter(slug=i.itemid)[0]
+            print(item)
             ll.append(item.itemid)
             ll.append(item.itemname)
             price = item.price

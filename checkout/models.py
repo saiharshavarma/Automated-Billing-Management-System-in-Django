@@ -1,5 +1,7 @@
+from time import timezone
 from django.db import models
 from inventory.models import ItemMain, User
+import datetime
 # Create your models here.
 
 
@@ -15,7 +17,7 @@ class CustomerDetails(models.Model):
     email = models.EmailField(max_length=264)
 
     def __str__(self) -> str:
-        return str(str(self.customerid) + " -> " + str(self.first_name))
+        return str("Customer ID: " + str(self.customerid) + " -> Customer Name: " + str(self.first_name))
 
 
 class Medicine_Logs(models.Model):
@@ -24,6 +26,7 @@ class Medicine_Logs(models.Model):
     itemid = models.ForeignKey(ItemMain, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=0)
     price = models.DecimalField(decimal_places=2, max_digits=25)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return str(str(self.user) + " -> " + str(self.itemid) + " -> " + str(self.customer))
+        return str(str(self.date) + " -> Operator: " + str(self.user) + " -> Item: " + str(self.itemid) + " -> " + str(self.customer))
