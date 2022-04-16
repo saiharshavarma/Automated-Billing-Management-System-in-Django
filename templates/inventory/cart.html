@@ -31,7 +31,11 @@
         <strong class="cart-total-title">Total</strong>
         <span class="cart-total-price" style="font-weight:bold">Rs. {{ total }}</span>
     </div>
-    <a href="{% url 'customer_details' %}" class="btn btn-primary btn-purchase" type="button"
-        style="width: 25%;">PURCHASE</a>
+    <div class="align-btns">
+        <a href="{% url 'clear_cart' %}" class="btn btn-primary btn-purchase" type="button"
+            style="width: 15%; text-decoration: none;">Clear Cart</a>
+        <a href="{% url 'customer_details' %}" class="btn btn-primary btn-purchase" type="button"
+            style="width: 15%; text-decoration: none;">PURCHASE</a>
+    </div>
 </section>
 {% endblock home %}

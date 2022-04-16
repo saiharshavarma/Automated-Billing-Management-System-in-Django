@@ -335,10 +335,16 @@ body {
     font-size: 1.1em;
 }
 
+.align-btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0px 15px;
+}
+
 .btn-purchase {
-    display: block;
-    margin: 40px auto 80px auto;
-    font-size: 1.75em;
+    margin: 10px;
+    font-size: 1em;
 }
 
 .invoice-box {

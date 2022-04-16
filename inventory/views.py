@@ -14,6 +14,7 @@ def home(request):
     return render(request, "homepage.html", context)
 
 
+@login_required(login_url='login')
 def items_display(request):
     itemsearch = []
     l = []
@@ -127,9 +128,8 @@ def items_display(request):
     }
     return render(request, "inventory/inventory view.html", context)
 
-# @login_required(login_url='login')
 
-
+@login_required(login_url='login')
 def item_upload(request):
     context = {}
     if request.method == 'POST':
@@ -161,9 +161,8 @@ def item_upload(request):
 
     return render(request, 'inventory/inventoryadd.html', context)
 
-# @login_required(login_url='login')
 
-
+@login_required(login_url='login')
 def cart(request):
     context = {}
     total_amount = 0
@@ -195,6 +194,31 @@ def cart(request):
 @ login_required(login_url='login')
 def clear_cart(request):
     context = {}
+    updated_list = []
+    if request.method == "GET":
+        user = request.user
+        items = UserCart.objects.filter(
+            user=User.objects.filter(username=user)[0]
+        )
+        l = []
+        for i in items:
+            item = ItemMain.objects.filter(slug=i.itemid)[0]
+            if item.itemid in updated_list:
+                pass
+            else:
+                quantity = UserCart.objects.filter(
+                    itemid=item.itemid)[0].quantity
+                updated_list.append(item.itemid)
+                item.update_quantity(quantity)
+                item.save()
+            i.delete()
+        context['items'] = l
+        return redirect('view')
+
+
+@ login_required(login_url='login')
+def empty_cart(request):
+    context = {}
     if request.method == "GET":
         user = request.user
         items = UserCart.objects.filter(
@@ -204,9 +228,10 @@ def clear_cart(request):
         for i in items:
             i.delete()
         context['items'] = l
-        return redirect('cart')
+        return redirect('homepage')
 
 
+@login_required(login_url='login')
 def contact(request):
     if request.method == "POST":
         username = request.POST.get("username")

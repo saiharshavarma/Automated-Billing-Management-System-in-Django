@@ -4,13 +4,14 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from .models import CustomerDetails, Medicine_Logs
 from inventory.models import UserCart, ItemMain
-from inventory.views import clear_cart
+from inventory.views import empty_cart
 import json
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 
+@login_required(login_url='login')
 def customer_details(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -32,6 +33,7 @@ def customer_details(request):
         return render(request, 'checkout/customer details.html', {})
 
 
+@login_required(login_url='login')
 def generate_bill(request):
     context = {}
     customer = list(CustomerDetails.objects.all())[-1]
@@ -62,7 +64,7 @@ def generate_bill(request):
             log = Medicine_Logs.objects.create(
                 user=user, customer=customer, itemid=itemtemp, quantity=quantity, price=item[2]*quantity)
             log.save()
-        clear_cart(request)
+        empty_cart(request)
         print(l)
         context['items'] = l
         context['total'] = total_amount
