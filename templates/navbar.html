@@ -1,20 +1,20 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <section id="header">
     <a href="#"><img src="{% static 'img/logo.jpg'%}" class="logo" alt=""></a>
     <div>
         <ul id="navbar">
-            <li><a class="active" href="index.html">Home</a></li>
-            <li><a class="" href="shop.html">Shop</a></li>
-            <li><a class="" href="About.html">About</a></li>
-            <li><a class="" href="contact.html">Contact</a></li>
-            <li><a class="" href="Termsandconditions.html">Terms and conditions</a></li>
-            <!-- <li><a href="cart.html"><i class="fa-solid fa-bag-shopping"></i></a></li> -->
+            <li><a class="active" href="{% url 'homepage' %}">Home</a></li>
+            <li><a class="" href="{% url 'view' %}">Shop</a></li>
+            <li><a class="" href="{% url 'homepage' %}">About</a></li>
+            <li><a class="" href="{% url 'contact' %}">Contact</a></li>
+            <li><a class="" href="{% url 'homepage' %}">Terms and conditions</a></li>
             {% if user.is_authenticated %}
             <li>
-                <a class="" href="" class="dropdown-item">{{ user }}</a>
+                <a class="" href="{% url 'homepage' %}" class="dropdown-item">{{ user }}</a>
             </li>
             <li>
                 <a class="" href="{% url 'logout' %}" class="dropdown-item">Logout</a>
@@ -24,6 +24,8 @@
                 <a class="" href="{% url 'login' %}" class="dropdown-item">Login</a>
             </li>
             {% endif %}
+            <a class="" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"
+                    style="color: rgba(0, 0, 0, 0.805)"></i></a>
         </ul>
     </div>
 </section>

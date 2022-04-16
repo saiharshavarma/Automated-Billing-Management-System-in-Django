@@ -25,7 +25,7 @@ def customer_details(request):
             billing = CustomerDetails.objects.create(first_name=first_name, middle_name=middle_name, last_name=last_name,
                                                      state=state, street=street, city=city, phone=float(phone), email=email)
             billing.save()
-            return redirect('homepage')
+            return redirect('bill')
         else:
             return redirect('login')
     else:

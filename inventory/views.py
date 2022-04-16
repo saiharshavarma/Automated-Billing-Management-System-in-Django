@@ -176,7 +176,6 @@ def cart(request):
         for i in items:
             ll = []
             item = ItemMain.objects.filter(slug=i.itemid)[0]
-            print(item)
             ll.append(item.itemid)
             ll.append(item.itemname)
             price = item.price
@@ -188,7 +187,6 @@ def cart(request):
             else:
                 l[tuple(ll)] = 1
             total_amount += newPrice
-        print(l)
         context['items'] = l
         context['total'] = total_amount
     return render(request, 'inventory/cart.html', context)

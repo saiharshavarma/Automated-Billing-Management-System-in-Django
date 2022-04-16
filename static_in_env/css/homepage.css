@@ -65,7 +65,7 @@ p {
     padding-bottom: 15px;
 }
 
-#hero button {
+#hero a {
     background-image: url("../img/homepage/button.jfif");
     background-color: transparent;
     color: #088178;
