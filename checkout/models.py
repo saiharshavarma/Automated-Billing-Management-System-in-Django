@@ -5,7 +5,7 @@ import datetime
 # Create your models here.
 
 
-class CustomerDetails(models.Model):
+class CustomerDetail(models.Model):
     customerid = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=264)
     middle_name = models.CharField(max_length=264)
@@ -20,9 +20,9 @@ class CustomerDetails(models.Model):
         return str("Customer ID: " + str(self.customerid) + " -> Customer Name: " + str(self.first_name))
 
 
-class Medicine_Logs(models.Model):
+class Medicine_Log(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    customer = models.ForeignKey(CustomerDetails, on_delete=models.PROTECT)
+    customer = models.ForeignKey(CustomerDetail, on_delete=models.PROTECT)
     itemid = models.ForeignKey(ItemMain, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=0)
     price = models.DecimalField(decimal_places=2, max_digits=25)

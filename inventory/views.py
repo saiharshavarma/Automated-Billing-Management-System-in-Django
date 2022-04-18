@@ -69,7 +69,7 @@ def items_display(request):
                 currentItem.quantity -= quantity
                 currentItem.save()
             else:
-                # messages.warning("Out of Stock")
+                messages.info(request, "Out of Stock")
                 print("Out of Stock")
 
         if min_price == '' or min_price == None:
@@ -104,6 +104,10 @@ def items_display(request):
             else:
                 ll.append("Invalid")
             ll.append(i.slug)
+            if i.expirydate <= date.today():
+                ll.append("Expired")
+            else:
+                ll.append("Valid")
             l.append(ll)
     else:
         items = list(ItemMain.objects.all())

@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="{% static 'css/inventory view.css' %}" />
 <link rel="stylesheet" href="https://fontawesome.com/v4.7.0/assets/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 <div class="container">
 	<div class="row">
 		<aside class="col-md-3">
@@ -57,12 +56,12 @@
 								</div>
 							</label>
 							<label class="custom-control custom-checkbox">
-								<input type="checkbox" value="injections" name="cat" class="custom-control-input">
+								<input type="checkbox" value="injectibles" name="cat" class="custom-control-input">
 								<div class="custom-control-label">Injectibles
 								</div>
 							</label>
 							<label class="custom-control custom-checkbox">
-								<input type="checkbox" value="inhalers" name="cat" class="custom-control-input">
+								<input type="checkbox" value="inhaler" name="cat" class="custom-control-input">
 								<div class="custom-control-label">Inhalers
 								</div>
 							</label>
@@ -96,6 +95,11 @@
 		<main class="col-md-9">
 			<header class="border-bottom mb-4 pb-3">
 			</header>
+			{% for message in messages %}
+			<div class="alert" style="background: red; color: white; text-align: center">
+				{{message}}
+			</div>
+			{% endfor %}
 			<div>
 				<table class="table table-hover" style="width:90%; margin-left: 70px; margin-top: 10px;">
 					<thead>
@@ -153,4 +157,9 @@
 		</main>
 	</div>
 </div>
+<script>
+	setTimeout(function () {
+		document.querySelector('.alert').style.display = 'none';
+	}, 3000);
+</script>
 {% endblock home %}

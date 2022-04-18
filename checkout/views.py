@@ -2,7 +2,7 @@ from statistics import quantiles
 from typing import AnyStr
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-from .models import CustomerDetails, Medicine_Logs
+from .models import CustomerDetail, Medicine_Log
 from inventory.models import UserCart, ItemMain
 from inventory.views import empty_cart
 import json
@@ -24,8 +24,8 @@ def customer_details(request):
             city = request.POST['city']
             phone = request.POST['phone']
             email = request.POST['email']
-            billing = CustomerDetails.objects.create(first_name=first_name, middle_name=middle_name, last_name=last_name,
-                                                     state=state, street=street, city=city, phone=float(phone), email=email)
+            billing = CustomerDetail.objects.create(first_name=first_name, middle_name=middle_name, last_name=last_name,
+                                                    state=state, street=street, city=city, phone=float(phone), email=email)
             billing.save()
             return redirect('bill')
         else:
@@ -62,7 +62,7 @@ def generate_bill(request):
             total_amount += newPrice
         for item, quantity in l.items():
             itemtemp = ItemMain.objects.filter(slug=item[0])[0]
-            log = Medicine_Logs.objects.create(
+            log = Medicine_Log.objects.create(
                 user=user, customer=customer, itemid=itemtemp, quantity=quantity, price=item[2]*quantity)
             log.save()
         empty_cart(request)
