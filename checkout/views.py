@@ -7,6 +7,7 @@ from inventory.models import UserCart, ItemMain
 from inventory.views import empty_cart
 import json
 from django.contrib.auth.decorators import login_required
+from datetime import date
 
 # Create your views here.
 
@@ -68,4 +69,5 @@ def generate_bill(request):
         print(l)
         context['items'] = l
         context['total'] = total_amount
+        context['date'] = date.today()
     return render(request, "checkout/bill.html", context)

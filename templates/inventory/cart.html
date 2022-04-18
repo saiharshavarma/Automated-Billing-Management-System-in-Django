@@ -20,7 +20,7 @@
             <tr class="item">
                 <td>{{ item.1 }}</td>
                 <td style="text-align:center">{{ quantity }}</td>
-                <td> Rs.{{ item.2 }}</td>
+                <td> ₹{{ item.2|floatformat:2 }}</td>
             </tr>
             {% endfor %}
 
@@ -29,7 +29,7 @@
     </div>
     <div class="cart-total">
         <strong class="cart-total-title">Total</strong>
-        <span class="cart-total-price" style="font-weight:bold">Rs. {{ total }}</span>
+        <span class="cart-total-price" style="font-weight:bold">₹{{ total|floatformat:2 }}</span>
     </div>
     <div class="align-btns">
         <a href="{% url 'clear_cart' %}" class="btn btn-primary btn-purchase" type="button"

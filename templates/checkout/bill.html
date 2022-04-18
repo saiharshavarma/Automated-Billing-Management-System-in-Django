@@ -15,8 +15,7 @@
 							</td>
 
 							<td>
-								Created: April 09, 2020<br />
-								Due: April 09, 2020
+								Date: {{ date }}<br />
 							</td>
 						</div>
 					</tr>
@@ -53,7 +52,7 @@
 		<tr class="details">
 			<td>Cash</td>
 			<td></td>
-			<td>₹ {{ total }}</td>
+			<td>₹{{ total|floatformat:2 }}</td>
 		</tr>
 
 		<tr class="heading">
@@ -66,13 +65,13 @@
 		<tr class="item">
 			<td>{{ item.1 }}</td>
 			<td style="text-align:center">{{ quantity }}</td>
-			<td>₹ {{ item.2 }}</td>
+			<td>₹{{ item.2|floatformat:2 }}</td>
 		</tr>
 		{% endfor %}
 		<tr class="total">
 			<td></td>
 
-			<td>Total:₹ {{ total }}</td>
+			<td>Total:₹{{ total|floatformat:2 }}</td>
 		</tr>
 	</table>
 </div>

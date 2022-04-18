@@ -5,6 +5,7 @@ from .models import ItemMain, ItemsCat, UserCart, Contact
 import json
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from datetime import date
 
 # Create your views here.
 
@@ -122,6 +123,10 @@ def items_display(request):
             else:
                 ll.append("Invalid")
             ll.append(i.slug)
+            if i.expirydate <= date.today():
+                ll.append("Expired")
+            else:
+                ll.append("Valid")
             l.append(ll)
     context = {
         "items": l
