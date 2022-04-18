@@ -9,9 +9,9 @@
         <ul id="navbar">
             <li><a class="active" href="{% url 'homepage' %}">Home</a></li>
             <li><a class="" href="{% url 'view' %}">Shop</a></li>
-            <li><a class="" href="{% url 'homepage' %}">About</a></li>
+            <li><a class="" href="{% url 'about' %}">About</a></li>
             <li><a class="" href="{% url 'contact' %}">Contact</a></li>
-            <li><a class="" href="{% url 'homepage' %}">Terms and conditions</a></li>
+            <li><a class="" href="{% url 'tnc' %}">Terms and conditions</a></li>
             {% if user.is_authenticated %}
             <li>
                 <a class="" href="{% url 'homepage' %}" class="dropdown-item">{{ user }}</a>

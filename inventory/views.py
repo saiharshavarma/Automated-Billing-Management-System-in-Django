@@ -241,3 +241,11 @@ def contact(request):
             username=username, phone=phone, problem=problem)
         contact.save()
     return render(request, "contactus.html", {})
+
+
+def about(request):
+    return render(request, "aboutus.html", {})
+
+
+def tnc(request):
+    return render(request, "t&c.html", {})
