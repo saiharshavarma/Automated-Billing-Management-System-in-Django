@@ -37,7 +37,7 @@ def customer_details(request):
 @login_required(login_url='login')
 def generate_bill(request):
     context = {}
-    customer = list(CustomerDetails.objects.all())[-1]
+    customer = list(CustomerDetail.objects.all())[-1]
     context['customer'] = customer
     total_amount = 0
     if request.method == "GET":
