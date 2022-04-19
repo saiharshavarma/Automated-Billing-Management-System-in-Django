@@ -25,8 +25,7 @@ class ItemMain(models.Model):
     manufacturingdate = models.DateField()
     expirydate = models.DateField()
     quantity = models.IntegerField(default=0)
-    slug = models.SlugField(max_length=50, unique=True,
-                            default="", editable=False)
+    slug = models.SlugField(max_length=50, unique=True, editable=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.itemid, allow_unicode=True)

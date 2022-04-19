@@ -7,11 +7,16 @@
     <a href="#"><img src="{% static 'img/logo.jpg'%}" class="logo" alt=""></a>
     <div>
         <ul id="navbar">
-            <li><a class="active" href="{% url 'homepage' %}">Home</a></li>
-            <li><a class="" href="{% url 'view' %}">Shop</a></li>
-            <li><a class="" href="{% url 'about' %}">About</a></li>
-            <li><a class="" href="{% url 'contact' %}">Contact</a></li>
-            <li><a class="" href="{% url 'tnc' %}">Terms and conditions</a></li>
+            <li><a class="{% if request.path == '/' %}active{% endif %}" href="{% url 'homepage' %}">Home</a>
+            </li>
+            <li><a class="{% if request.path == '/view' %}active{% endif %}" href="{% url 'view' %}">Shop</a></li>
+            <li><a class="{% if request.path == '/upload_item' %}active{% endif %}" href="{% url 'inventoryadd' %}">Add
+                    Inventory</a></li>
+            <li><a class="{% if request.path == '/about' %}active{% endif %}" href="{% url 'about' %}">About</a></li>
+            <li><a class="{% if request.path == '/contact' %}active{% endif %}" href="{% url 'contact' %}">Contact</a>
+            </li>
+            <li><a class="{% if request.path == '/t&c' %}active{% endif %}" href="{% url 'tnc' %}">Terms and
+                    conditions</a></li>
             {% if user.is_authenticated %}
             <li>
                 <a class="" href="{% url 'homepage' %}" class="dropdown-item">{{ user }}</a>
@@ -21,7 +26,8 @@
             </li>
             {% else %}
             <li>
-                <a class="" href="{% url 'login' %}" class="dropdown-item">Login</a>
+                <a class="{% if request.path == '/accounts/login' %}active{% endif %}" href="{% url 'login' %}"
+                    class="dropdown-item">Login</a>
             </li>
             {% endif %}
             <a class="" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"

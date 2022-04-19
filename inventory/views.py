@@ -153,16 +153,9 @@ def item_upload(request):
         itemsearch = list(ItemMain.objects.filter(
             itemname__icontains=itemname, price=price, discount=discount, expirydate=expirydate))
         if itemsearch == []:
-            itemmain = ItemMain.objects.create(
-                itemname=itemname,
-                discount=discount,
-                price=price,
-                type=ItemsCat.objects.filter(catName=type)[0],
-                quantity=quantity,
-                composition=composition,
-                manufacturingdate=manufacturingdate,
-                expirydate=expirydate
-            )
+            itemmain = ItemMain.objects.create(itemname=itemname, discount=discount, price=price, type=ItemsCat.objects.filter(
+                catName=type)[0], quantity=quantity, composition=composition, manufacturingdate=manufacturingdate, expirydate=expirydate)
+            print(itemmain)
             itemmain.save()
         else:
             itemsearch[0].update_quantity(quantity)
