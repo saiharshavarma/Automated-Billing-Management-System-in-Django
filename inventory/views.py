@@ -69,8 +69,8 @@ def items_display(request):
                 currentItem.quantity -= quantity
                 currentItem.save()
             else:
-                messages.info(request, "Out of Stock")
-                print("Out of Stock")
+                messages.info(request, str("Only " + str(currentItem.quantity) +
+                                           " are left in the inventory"))
 
         if min_price == '' or min_price == None:
             min_price = 0
@@ -108,6 +108,10 @@ def items_display(request):
                 ll.append("Expired")
             else:
                 ll.append("Valid")
+            if i.quantity == 0:
+                ll.append("Out of Stock")
+            else:
+                ll.append("In Stock")
             l.append(ll)
     else:
         items = list(ItemMain.objects.all())
@@ -131,6 +135,10 @@ def items_display(request):
                 ll.append("Expired")
             else:
                 ll.append("Valid")
+            if i.quantity == 0:
+                ll.append("Out of Stock")
+            else:
+                ll.append("In Stock")
             l.append(ll)
     context = {
         "items": l

@@ -96,7 +96,7 @@
 			<header class="border-bottom mb-4 pb-3">
 			</header>
 			{% for message in messages %}
-			<div class="alert" style="background: red; color: white; text-align: center">
+			<div class="alert" style="background: orange; color: white; text-align: center">
 				{{message}}
 			</div>
 			{% endfor %}
@@ -116,7 +116,8 @@
 					{% if item.6 == "Valid" %}
 					<tr>
 						<td scope="row">{{ item.0 }}</td>
-						<td>{{ item.1 }}</td>
+						<td>{{ item.1 }}<br>{% if item.9 == "Out of Stock" %}<span class="badge badge-warning">Out of
+								stock</span>{% endif %}</td>
 						<form method="POST">
 							{% csrf_token %}
 							<td><input type="number" id="quantity" name="quantity" min="0" max="1,000"
@@ -130,7 +131,7 @@
 							<td>{{ item.3 }}%</td>
 							<td style="width: 20%;padding-bottom: 10px;"><del>₹{{ item.4|floatformat:2 }}</del><br>
 								₹{{ item.5|floatformat:2 }}<br>
-								{% if item.8 == "Expired" %}
+								{% if item.8 == "Expired" or item.9 == "Out of Stock" %}
 								<button class="btn btn-primary" disabled>Add to Cart</button>
 								{% else %}
 								<button class="btn btn-primary">Add to Cart</button>
@@ -140,7 +141,7 @@
 							<td>-</td>
 							<td style="width: 20%;padding-bottom: 10px;">
 								₹{{ item.5|floatformat:2 }}<br>
-								{% if item.8 == "Expired" %}
+								{% if item.8 == "Expired" or item.9 == "Out of Stock" %}
 								<button class="btn btn-primary" disabled>Add to Cart</button>
 								{% else %}
 								<button class="btn btn-primary">Add to Cart</button>
